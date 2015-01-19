@@ -1,0 +1,1 @@
+Global $barracksTrainTroopsMenu[2] = [ 1200, 1000 ]
