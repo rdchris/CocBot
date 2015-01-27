@@ -1,3 +1,8 @@
+;===============================
+;Clash of clans automated bot
+;Author: rdchris
+;===============================
+
 ;Libaries
 #include <Array.au3>
 #include <PrintFromArray.au3>
@@ -7,6 +12,7 @@
 
 ;Environment Vars
 #include <masterSettings.au3>
+#include <masterConfig.au3>
 
 ;static positions
 #include <buildingMenuPositions.au3>
@@ -20,28 +26,33 @@
 
 ;Attacking
 #include <pixelSearches.au3>
-#include <armyQueingManager.au3>
 #include <baseEvaluater.au3>
+#include <armyQueingManager.au3>
 #include <attackManager.au3>
 #include <armydeploymentManager.au3>
+#include <potionUseManager.au3>
 
 ;External Programs and Lauching
 #include <programController.au3>
 ;=======================================================================================================================================
 ;Master Script Below
 ;=======================================================================================================================================
-WinActivate("BlueStacks App Player") 				;Selects BlueStacks App Player
 
+armyQueingManager_queSpells()
+Exit
+
+programController_loadBlueStacksIfNeeded()
 initScriptVars()
 startKeepAliveLoop()
 ;</Mainline>
 
 ;instanciate instance vars4
 Func initScriptVars()
-	Global $numberOfAttacksToDoThisSession=Random($masterSettings_attacksPerSession[0][1],$masterSettings_attacksPerSession[1][1],1)
+	Global $numberOfAttacksToDoThisSession=$masterSettings_attacksToExecute
 	Global $numberOfAttacksThisSession=0
 	ConsoleWrite("For This Session there will be " & $numberOfAttacksToDoThisSession & " attacks" & @LF)
 EndFunc
+
 ;Master Loops - This is here incase there is a disconnection
 Func startKeepAliveLoop()
 

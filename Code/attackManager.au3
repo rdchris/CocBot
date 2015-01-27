@@ -30,11 +30,11 @@ Func attackManager_FindTargetBase()
 		programController_restartIfAtBase()
 		pixelSearchWaitForPixelToAppear($attackManager_PositionsFindNext,$attackManager_FindNextColor,60)
 		baseEvaluationForAttack()
-		if $attackYorN="N" Then
+		if $baseEvaluater_attackYorN="N" Then
 			randomClickFunctions_RandomClick($attackManager_PositionsFindNext)
 		EndIf
 
-	Until $attackYorN="Y"
+	Until $baseEvaluater_attackYorN="Y"
 
 
 EndFunc

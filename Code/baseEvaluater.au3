@@ -1,4 +1,5 @@
-Global $attackYorN
+Global $baseEvaluater_attackYorN
+Global $baseEvaluater_usePotions
 Local $goldAmount
 Local $elixirAmount
 Local $deAmount
@@ -21,15 +22,24 @@ $baseEvaluater_baseValueMatchKillCount=3
 Func baseEvaluationForAttack()
 	screenMovementFunctions_scrollUp()
 
-	$attackYorN="N"
+	$baseEvaluater_attackYorN="N"
+	$baseEvaluater_usePotions="N"
 	$goldAmount=0
 	$elixirAmount=0
 	$deAmount=0
+	$secondValidationOfResources="N"
 
 	$isBaseAbandoned=isBaseAbandoned()
 	getResources()
 	reviewResourceFinding()
 	determineToAttack()
+
+	;Do a second check before commiting to an attack
+	if $baseEvaluater_attackYorN=="Y" Then
+		getResources()
+		reviewResourceFinding()
+		determineToAttack()
+	EndIf
 	;determineToAttackWithMiniumValues()
 	baseEvaluater_reviewPossibleErrors()
 
@@ -53,39 +63,22 @@ EndFunc
 
 ;Incase there is an issue retrieving the data
 Func reviewResourceFinding()
-	;Should just check for double
 
-	if $goldAmount > 600000 Then
-		$goldAmount=60000
+
+	if $goldAmount > 700000 Then
+		$goldAmount=70000
 	EndIf
 
-	if $elixirAmount > 600000 Then
-		$elixirAmount=60000
+	if $elixirAmount > 700000 Then
+		$elixirAmount=70000
 	EndIf
 
-	;TODO change to a %
-	if 	$goldAmount> 350000 and $elixirAmount < 180000 Then
-		$goldAmount=30000
+	if 	$goldAmount > $elixirAmount * 3 Then
+		$goldAmount=0
 	EndIf
 
-	if 	$elixirAmount> 350000 and $goldAmount < 180000 Then
-		$elixirAmount=50000
-	EndIf
-
-	if $elixirAmount > 250000 and $goldAmount < 140000 Then
-		$elixirAmount=20000
-	EndIf
-
-	if $goldAmount > 250000 and $elixirAmount < 140000 Then
-		$goldAmount=20000
-	EndIf
-
-	if $elixirAmount > 170000 and $goldAmount < 40000 Then
-		$elixirAmount= 40000
-	EndIf
-
-	if $goldAmount > 170000 and $elixirAmount < 40000 Then
-		$goldAmount=40000
+		if 	$elixirAmount > $goldAmount * 3 Then
+		$elixirAmount=0
 	EndIf
 
 	if $deAmount > 4000 Then
@@ -93,40 +86,6 @@ Func reviewResourceFinding()
 	EndIf
 
 
-
-EndFunc
-
-Func determineToAttackWithMiniumValues()
-
-	Local $goldPoints=$goldAmount*$masterSettings_goldValue
-	Local $elixirPoints=$elixirAmount*$masterSettings_elixirValue
-	Local $dePoints=$deAmount*$masterSettings_deValue
-
-	$baseValue=$goldPoints+$elixirPoints+$dePoints
-
-	Local $minInactiveAttackValue
-	Local $activeAttackValue
-
-	;Determine minium number of resources to go after based on if I'm boosting or not
-	if $masterSettings_boostBarracks == "Y" Then
-		$inactiveAttackValue=$masterSettings_attackOnValueInactiveBOOSTING
-		$activeAttackValue=$masterSettings_attackOnValueActiveBOOSTING
-	Else
-		$inactiveAttackValue=$masterSettings_attackOnValueActive
-		$activeAttackValue=$masterSettings_attackOnValueInactive
-	EndIf
-
-	if $isBaseAbandoned=="Y" Then
-		if $baseValue >= $inactiveAttackValue Then
-			$attackYorN="Y"
-		EndIf
-
-	ElseIf $masterSettings_attackActiveYorN == "Y" Then
-		reviewWalls()
-		if $baseValue >= $activeAttackValue AND ($wallType==$pinkWallsName OR $wallType==$goldWallsName) Then  ;OR $wallType==$purpleWallsName
-			$attackYorN="Y"
-		EndIf
-	EndIf
 
 EndFunc
 
@@ -147,30 +106,36 @@ Func determineToAttack()
 		$inactiveAttackValue=$masterSettings_attackOnValueInactiveBOOSTING
 		$activeAttackValue=$masterSettings_attackOnValueActiveBOOSTING
 	Else
-		$inactiveAttackValue=$masterSettings_attackOnValueActive
-		$activeAttackValue=$masterSettings_attackOnValueInactive
+		$inactiveAttackValue=$masterSettings_attackOnValueInactive
+		$activeAttackValue=$masterSettings_attackOnValueActive
 	EndIf
 
 	if $isBaseAbandoned=="Y" Then
 		if $baseValue >= $inactiveAttackValue Then
-			$attackYorN="Y"
+			$baseEvaluater_attackYorN="Y"
+			if $baseValue >= $masterSettings_attackOnValueInactiveUsePotions Then
+				$baseEvaluater_usePotions="Y"
+			EndIf
 		EndIf
 
 	ElseIf $masterSettings_attackActiveYorN == "Y" Then
 		reviewWalls()
 		if $baseValue >= $activeAttackValue AND ($wallType==$pinkWallsName OR $wallType==$goldWallsName) Then  ;OR $wallType==$purpleWallsName
-			$attackYorN="Y"
+			$baseEvaluater_attackYorN="Y"
+			if $baseValue >= $masterSettings_attackOnValueInactiveUsePotions Then
+				$baseEvaluater_usePotions="Y"
+			EndIf
 		EndIf
 	EndIf
 
-	If $attackYorN=="Y" Then
+	If $baseEvaluater_attackYorN=="Y" Then
 		;programController_takeScreenshot("attackedBases")
 	Else
 		;programController_takeScreenshot("skippedBases")
 	EndIf
 
 	ConsoleWrite("=============== <Base Evaluation> ================" & @LF)
-	ConsoleWrite(" Suggestion to attack is 		:" & $attackYorN & @LF)
+	ConsoleWrite(" Suggestion to attack is 		:" & $baseEvaluater_attackYorN & @LF)
 	ConsoleWrite(" Gold is				:" & $goldAmount	& @LF)
 	ConsoleWrite(" Elixir is				:" & $elixirAmount	& @LF)
 	ConsoleWrite(" deElixir is				:" & $deAmount	& @LF)
@@ -181,6 +146,7 @@ Func determineToAttack()
 	Else
 		ConsoleWrite(" The Value to attack is			:" & $activeAttackValue   & @LF)
 	EndIf
+	ConsoleWrite(" Use potions?                 :" & $baseEvaluater_usePotions & @LF)
 	ConsoleWrite(" The Wall Type is 			:" & $wallType   & @LF)
 	ConsoleWrite("=============== </Base Evaluation> ================" & @LF)
 EndFunc

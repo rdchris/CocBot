@@ -6,6 +6,8 @@ Global $armyQueingManager_barracksMenuPosition[10][2] 	= 	[[515, 470], [690, 480
 Global $armyQueingManager_barracksMenuClosePosition[2] 	= 	[1300, 200]
 Global $armyQueingManager_barracksMenuCloseColor	=		0xF8FCFF
 
+Global $armyQueingManager_potionMenuPoitions[5][3]=[["Lightening",520,475],["Healing",687,475],["Rage",843,475],["Jump",1015,475],["Frost",1170,475]]
+
 Global $armyQueingManager_barrackMenuAreTroopsBoostingCheckPositions1[4]=[964,905,964,905]
 Global $armyQueingManager_barrackMenuAreTroopsBoostingCheckPositions2[4]=[1019,924,1019,924]
 Global $armyQueingManager_barrackMenuAreTroopsBoostingCheckColors=0xFFFFFF
@@ -59,6 +61,10 @@ Func armyQueingManager_loadBarracks($allBarracksArmy)
 		armyQueingManager_barrackSelectTrainTroopsMenu($currentArmyBaseNumber)
 		armyQueingManager_barracksMenuLoadTroopsSelected($allBarracksArmy,$currentArmyBaseNumber)
 		armyQueingManager_closeArmyMenu()
+
+		if $baseEvaluater_usePotions=="Y" Then
+			armyQueingManager_queSpells()
+		EndIf
 	Next
 EndFunc
 
@@ -169,4 +175,19 @@ Func armyQueingManager_waitForArmyCampsToBeFull()
 			$armyCampsLoops=0
 		EndIf
 	WEnd
+EndFunc
+
+;Ques Potions to use in battle
+Func armyQueingManager_queSpells()
+	MouseClick("Left",$baseManager_spellFactorPosition[0],$baseManager_spellFactorPosition[1])
+	Sleep(Random(1200,3230))
+
+	MouseClick("Left",$armyQueingManager_barracksTrainTroopsMenu[0],$armyQueingManager_barracksTrainTroopsMenu[1])
+	Sleep(Random(500,4230))
+
+	if ($masterSetings_PotionType=="Rage") Then
+		MouseClick("left",$armyQueingManager_potionMenuPoitions[2][1]+Random(-50,+50),$armyQueingManager_potionMenuPoitions[2][2]+Random(-50,+50),Random(2,4))
+	EndIf
+
+	armyQueingManager_closeArmyMenu()
 EndFunc

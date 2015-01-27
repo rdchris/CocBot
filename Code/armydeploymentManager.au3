@@ -5,10 +5,22 @@
 
 ; Army - Finding in deployment
 ;======
-Global $pixelSearchArmyTroops[12][2]=[["Barbs",0xF8F830],["Archers",0xE84071],["Gaints",0xF8CC96],["goblinTODO","???"],["WBTODO","????"],["Balloons","????"],["WizardsTODO","??"],["HealerTODO","??"],["DragonTODO","????"],["PEAKKATODO","????"],["Barb King",0xF8E05E], ["Archer Queen",0x7F37FA]]
+Global $pixelSearchArmyTroops[13][2]=[["0-Barbs",0xF8F830],["1-Archers",0xE84071],["2-Gaints",0xF8CC96],["3-goblinTODO","???"],["4-WBTODO","????"],["5-Balloons","????"],["6-WizardsTODO","??"],["7-HealerTODO","??"],["8-DragonTODO","????"],["9-PEAKKATODO","????"], _
+									  ["10-Barb King",0xF8E05E], ["11-Archer Queen",0x7F37FA], _
+									  ["12-Minion",0x326BA3]]
+Global $armydeploymentManagerActiveHeroPixels[2][2]=[["barb king gauntlet",0xCDA95C],["archer queen crossboxColor",""]]
+
+															  ; King
+Global $armydeploymentManagerActiveBarbKingGauntletPositions[4]=[0,907,1650,907]
+Global $armydeploymentManagerActiveHeroHealthColor[2]=[0x74756B,"queen"]
+Global $armydeploymentManagerActiveHeroWeapontoHealthYDifference[2]=[94,""]
+
+
 
 Global $pixelSearchArmyDeploymentZone[4]=[0,800,1650,975] ;Where troops are displayed on the bottom of the screen
 
+
+;"barb king health at 70% color",0x6F7269
 
 ;Battle Menu
 Global $pixelSearchReturnHomeButtonPosition=[786,799,786,799]
@@ -56,9 +68,11 @@ Global $GABattackWave1[3][5]=[["Giants",2,	3,	4,	450],["Archers",1,23,35,150],["
 Global $GABOptions[1][2]=[["Timer To Quit",105000]] ;stat
 Global $GABHeroOptions[2][2]=[["Use Archer Queen","Y"],["Use Barb King","Y"]]
 
+;BARCH inactive
 Global $BARCHattackInactiveWave1[2][5]=[["Archers",1,5,7,200],["Barbs",0,3,5,150]]
 Global $BARCHattackInactiveWave2[3][5]=[["Barbs",0,17,21,150],["Archers",1,19,26,150],["Barbs",0,11,16,150]]
 
+;BARCH active
 Global $BARCHattackActiveWave1[2][5]=[["Barbs",0,20,26,150],["Archers",1,21,35,250]]
 Global $BARCHattackActiveWave2[3][5]=[["Barbs",0,14,17,150],["Archers",1,11,15,300],["Archer Queen",11,5,5,50]]
 Global $BARCHattackActiveWave3[2][5]=[["Barbs",0,13,15,150],["Archers",1,12,16,500]]
@@ -70,6 +84,9 @@ Global $BARCHattackActiveWave8[2][5]=[["Barbs",0,24,37,150],["Archers",1,23,36,2
 
 Global $BARCHOptions[1][2]=[["Timer To Quit",125000]] ;stat
 Global $BARCHHeroOptions[2][2]=[["Use Archer Queen","Y"],["Use Barb King","Y"]]
+
+;BAM inactive
+;Global $BAMattackinactive=
 
 ;Timer
 Global $attackTimer
@@ -117,11 +134,14 @@ Func armydeploymentManager_AttackActiveWithBARCH()
 	armydeploymentManager_dropWave($BARCHattackActiveWave2,$randomDropPosition)
 	armydeploymentManager_dropWave($BARCHattackActiveWave3,$randomDropPosition)
 	armydeploymentManager_dropWave($BARCHattackActiveWave4,$randomDropPosition)
+	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave5,$randomDropPosition)
+	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave6,$randomDropPosition)
+	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave7,$randomDropPosition)
+	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave8,$randomDropPosition)
-
 	armydeploymentManager_isBattleEnded($BARCHOptions)
 EndFunc
 
@@ -182,6 +202,7 @@ Func armydeploymentManager_isBattleEnded($TimerToQuit)
 	EndIf
 
 	Sleep(1000)
+	armydeploymentManager_useHeroablitiesIfNeeded()
 	Until $endBattleFlag="Y"
 
 EndFunc
@@ -285,4 +306,50 @@ Func armydeploymentManager_ClickOnEndBattleButton()
 	randomClickFunctions_RandomClick($pixelSearchEndBattleButtonPosition)
 	Sleep(Random(5350,7100))
 	randomClickFunctions_RandomClick($pixelSearchSurrenderOkayButtonPosition)
+EndFunc
+
+
+Func armydeploymentManager_useHeroablitiesIfNeeded()
+
+	;if the barb king is spawned check to see if he needs healing
+	If armydeploymentManager_areAnyTroopsOfThisTypeLeft(10)=="Y" Then
+		healBarbKingIfNeeded()
+	EndIf
+
+	If armydeploymentManager_areAnyTroopsOfThisTypeLeft(11)=="Y" Then
+		healthArcherQueenifNeeded()
+	EndIf
+
+EndFunc
+
+Func healBarbKingIfNeeded()
+
+	;gets the location of the barb kign's gauntlet
+	local $localOfBarbKingsGauntlet=PixelSearch($armydeploymentManagerActiveBarbKingGauntletPositions[0],$armydeploymentManagerActiveBarbKingGauntletPositions[1],$armydeploymentManagerActiveBarbKingGauntletPositions[2],$armydeploymentManagerActiveBarbKingGauntletPositions[3],$armydeploymentManagerActiveHeroPixels[0][1])
+	if @error Then
+		return
+	Else
+		;ConsoleWrite("Location of barb king's gauntlet : " & $localOfBarbKingsGauntlet[0] & " " & $localOfBarbKingsGauntlet[1] & @LF)
+		;ConsoleWrite("I think the healthbar is.. " & ($localOfBarbKingsGauntlet[1] - $armydeploymentManagerActiveHeroWeapontoHealthYDifference[0]) & @LF)
+
+		;Find the position where his health bar should be
+		local $localHealthYPosition=($localOfBarbKingsGauntlet[1] - $armydeploymentManagerActiveHeroWeapontoHealthYDifference[0])
+
+		;Determine if you can see through the healthbar at 70%, if so heal him, otherwise do nothing
+		PixelSearch($localOfBarbKingsGauntlet[0],$localHealthYPosition,$localOfBarbKingsGauntlet[0],$localHealthYPosition,$armydeploymentManagerActiveHeroHealthColor[0])
+		if @error Then
+		Else ;Health the king
+			ConsoleWrite("The king needs healing!!" & @LF)
+			;generate a random Y position between the guantlet and healthbar
+			local $randomYforClick=(Random($localHealthYPosition,$localOfBarbKingsGauntlet[1],1))
+			local $randomXPosition=(Random($localOfBarbKingsGauntlet[0]-10,$localOfBarbKingsGauntlet[0]+10))
+			ConsoleWrite("Position of click is.. " & $randomXPosition & " " & $randomYforClick & @LF)
+			MouseClick("left",$randomXPosition,$randomYforClick,1)
+		EndIf
+
+	EndIf
+EndFunc
+
+Func healthArcherQueenifNeeded()
+	;TODO
 EndFunc

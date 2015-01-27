@@ -4,6 +4,7 @@ Global $goldCollectorPositions[6][2] = [[985,270],[1060,335],[1130,380],[1200,43
 Global $darkElixirCollectorPositions[2][2] = [[710,880],[770,930]]
 Global $barrackPositions[4][2] =  [[382, 654], [437, 687], [491, 727], [549, 768]] ;Barracks 1,2,3,4
 Global $darkBarrackPositions[2][2] = [[600,590], [650,720]] ; DB 1,2
+Global $baseManager_spellFactorPosition[2]=[436,604]
 
 Global $pixelSearchFullArmyCampBarracksPosition[4]=[432,624,432,624]
 Global $pixelSearchFullArmyCampBarracksColor=0xEEEEEE

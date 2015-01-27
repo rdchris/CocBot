@@ -1,5 +1,4 @@
 #include <Array.au3>
-
 ;This is really part of ArmyDeployment manager but is complex enough I wanted to split it out
 
 local $starginPosition[4]=[0,0,1650,850]
@@ -20,14 +19,13 @@ Local $potionDropPositionY
 local $loop="on"
 ;ocal $sorterLoop="on"
 
-dropPotionOnhighestConcentrationofTroops()
 
 Func dropPotionOnhighestConcentrationofTroops()
 	getArrayOfTroopColor(0xFBB4A9,0x91847C)
 	buildDifferenceArray()
 	determineHighestConcentrationOfTroops()
 	determinePotionSpot()
-	dropPotion()
+	dropPotion($masterSetings_PotionType)
 EndFunc
 
 
@@ -67,11 +65,13 @@ Func buildDifferenceArray()
 		local $xDifference=$pixelMatchesArray[$i][0]-$pixelMatchesArray[$i+1][0]
 		local $yDifference=$pixelMatchesArray[$i][1]-$pixelMatchesArray[$i+1][1]
 
+		#cs
 		ConsoleWrite("$i is : " & $i & @LF)
 		ConsoleWrite("$numberOfElementToReview is : " & $numberOfElementToReview & @LF)
 		ConsoleWrite("X difference is : " & $xDifference & @LF)
 		ConsoleWrite("Y difference is : " & $yDifference & @LF)
 		ConsoleWRite("Total differnce is : " & Abs($xDifference+$yDifference) & @LF)
+		#ce
 		_ArrayAdd($differenceArray,Abs($xDifference+$yDifference))
 
 	Next
@@ -91,20 +91,18 @@ Func determineHighestConcentrationOfTroops()
 
 		local $differenceOfThisGroup=(Abs($differenceArray[$i-4])+Abs($differenceArray[$i-3])+Abs($differenceArray[$i-2])+Abs($differenceArray[$i-1])+Abs($differenceArray[$i]))
 		if Number($differenceOfThisGroup) < Number($closestGroupDifference) Then
-			ConsoleWrite("UPDATEDDDDDDDDDDDD!!!!!!!!!!!!!! " & @LF)
-			ConsoleWrite("The differene of this group is ... " & $differenceOfThisGroup & @LF)
+
 		ConsoleWrite("The current top differnece is : " & $closestGroupDifference & @LF)
 			$closestGroupNumber=$i
 			$closestGroupDifference=$differenceOfThisGroup
-			ConsoleWrite("The current top differnece is : " & $closestGroupDifference & @LF)
 		EndIf
 
 		Next
 	EndIf
 	$troopGroupPositionY=$pixelMatchesArray[$closestGroupNumber][1]
 	$troopGroupPositionX=$pixelMatchesArray[$closestGroupNumber][0]
-	ConsoleWrite("The closest group was number : " & $closestGroupNumber & " The difference was " & $closestGroupDifference & @LF)
-	ConsoleWRite("This location is " & $pixelMatchesArray[$closestGroupNumber][0] & " " &  $pixelMatchesArray[$closestGroupNumber][1] & @LF)
+	;ConsoleWrite("The closest group was number : " & $closestGroupNumber & " The difference was " & $closestGroupDifference & @LF)
+	;ConsoleWRite("This location is " & $pixelMatchesArray[$closestGroupNumber][0] & " " &  $pixelMatchesArray[$closestGroupNumber][1] & @LF)
 EndFunc
 
 ;Function determine potion spot
@@ -128,11 +126,15 @@ Func determinePotionSpot()
 		$positionPositionYRelativeToTroops="Up"
 	 EndIf
 
-	 MouseMove($potionDropPositionX,$potionDropPositionY)
+	 ;MouseMove($potionDropPositionX,$potionDropPositionY)
 EndFunc
 
 Func dropPotion($potionType)
 	If $potionType=="Rage" Then
-		pixelSearchClickOnThis($pixelSearchPotions[3][2],$pixelSearchArmyDeploymentZone)
+		pixelSearchClickOnThis($pixelSearchPotions[2][1],$pixelSearchArmyDeploymentZone)
+		Sleep(Random(20,80))
+		MouseClick("Left",$potionDropPositionX,$potionDropPositionY)
+		ConsoleWrite(" RAGEEEEEEEE!!!!!!!!!! " & @LF)
 	EndIf
+
 EndFunc

@@ -1,5 +1,10 @@
+;===========================================================================
+; The purpose of this class is to control non-game related items, such as
+; logging in, checking for disconnections and launching bluestacks app player
+;===============================================================================
+
 ;programController manipulates external programs and controlls logging into Coc
-Global $positionForReconnect[4]=[320,550,1350,600]
+Global $programController_positionForReconnect[4]=[320,550,1350,600]
 
 Global $programController_IsDisconnected
 Global $programController_EnemyAttackOkayButtonPosition1=[791,719]
@@ -34,14 +39,14 @@ Func programController_isDisconnected()
 
 	$programController_IsDisconnected="N"
 
-	PixelSearch($positionForReconnect[0],$positionForReconnect[1],$positionForReconnect[0],$positionForReconnect[1],0x282828)
+	PixelSearch($programController_positionForReconnect[0],$programController_positionForReconnect[1],$programController_positionForReconnect[0],$programController_positionForReconnect[1],0x282828)
 	If @error Then
 	Else
 		ConsoleWrite("programController_isDisconnected() Bombed in first statement" & @LF)
 		$programController_IsDisconnected="Y"
 	EndIf
 
-	PixelSearch($positionForReconnect[0],$positionForReconnect[1],$positionForReconnect[0],$positionForReconnect[1],0x2A5261)
+	PixelSearch($programController_positionForReconnect[0],$programController_positionForReconnect[1],$programController_positionForReconnect[0],$programController_positionForReconnect[1],0x2A5261)
 	If @error Then
 	Else
 		ConsoleWrite("programController_isDisconnected() Bombed in second statement" & @LF)
@@ -53,7 +58,7 @@ EndFunc
 
 ;Click on the reconnect button
 Func programController_reconnect()
-	randomClickFunctions_randomClick($positionForReconnect)
+	randomClickFunctions_randomClick($programController_positionForReconnect)
 	$programController_IsDisconnected="N"
 	Sleep(Random(11000,16000))
 	startAttackLoop()
@@ -127,4 +132,36 @@ Func programController_restartIfAtBase()
 		EndIf
 EndFunc
 
+;Launchs bluestacks app player if needed and selects clash of clans
+Func programController_loadBlueStacksIfNeeded()
 
+	;if Does not exist
+	if ProcessExists ( "HD-Frontend.exe" ) ==0 Then
+		ConsoleWrite("Bluestacks is not running!" & @LF)
+
+		;Launches Bluestacks
+		Run("C:\Program Files (x86)\BlueStacks\HD-StartLauncher.exe")
+
+		;Waits for the window to appear
+		Local $hWnd = WinWait("BlueStacks App Player")
+
+		;Maximize window
+		WinSetState($hWnd, "", @SW_MAXIMIZE)
+		WinActivate("BlueStacks App Player")
+
+		;Wait for Pixel showing that you can click on the coc button
+		Sleep(30000)
+
+		;Click on Coc
+		MouseClick("left",$bluestacksCocPosition[0],$bluestacksCocPosition[1])
+
+		;Sleep while loading elements
+		Sleep(45000)
+
+	Else
+		ConsoleWrite("Bluestacks is running!" & @LF)
+	EndIf
+
+	WinActivate("BlueStacks App Player")
+
+EndFunc

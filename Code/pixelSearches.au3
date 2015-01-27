@@ -41,8 +41,11 @@ EndFunc
 
 Func pixelSearchClickOnThis($color, $position)
 	Local $coordsOfFoundPixel = PixelSearch($position[0],$position[1],$position[2],$position[3], $color)
-	Sleep(Random(20,50))
-	MouseClick("left", $coordsOfFoundPixel[0] + Random(0,10,1), $coordsOfFoundPixel[1] + Random(0,10,1))
+	If @error Then
+	Else
+		Sleep(Random(20,50))
+		MouseClick("left", $coordsOfFoundPixel[0] + Random(0,10,1), $coordsOfFoundPixel[1] + Random(0,10,1))
+	EndIf
 EndFunc
 
 ;Waits for a pixel to be displayed
