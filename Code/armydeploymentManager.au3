@@ -8,12 +8,14 @@
 Global $pixelSearchArmyTroops[13][2]=[["0-Barbs",0xF8F830],["1-Archers",0xE84071],["2-Gaints",0xF8CC96],["3-goblinTODO","???"],["4-WBTODO","????"],["5-Balloons","????"],["6-WizardsTODO","??"],["7-HealerTODO","??"],["8-DragonTODO","????"],["9-PEAKKATODO","????"], _
 									  ["10-Barb King",0xF8E05E], ["11-Archer Queen",0x7F37FA], _
 									  ["12-Minion",0x326BA3]]
-Global $armydeploymentManagerActiveHeroPixels[2][2]=[["barb king gauntlet",0xCDA95C],["archer queen crossboxColor",""]]
-
+Global $armydeploymentManagerActiveHeroPixels[2][2]=[["barb king gauntlet",0xCDA95C],["archer queen crossboxColor",0xF8A7FE]]
+;747, 947
+;747, 815
 															  ; King
 Global $armydeploymentManagerActiveBarbKingGauntletPositions[4]=[0,907,1650,907]
-Global $armydeploymentManagerActiveHeroHealthColor[2]=[0x74756B,"queen"]
-Global $armydeploymentManagerActiveHeroWeapontoHealthYDifference[2]=[94,""]
+Global $armydeploymentManagerActiveArcherQueenCrossBow[4]=[0,947,1650,947]
+Global $armydeploymentManagerActiveHeroHealthColor[2]=[0x74756B,0x89672E] ;King/Queen
+Global $armydeploymentManagerActiveHeroWeapontoHealthYDifference[2]=[94,132] ;King/Queen
 
 
 
@@ -351,5 +353,27 @@ Func healBarbKingIfNeeded()
 EndFunc
 
 Func healthArcherQueenifNeeded()
+	;132
 	;TODO
+
+	;gets the location of the barb kign's gauntlet
+	local $localOfQueenCrossBow=PixelSearch($armydeploymentManagerActiveArcherQueenCrossBow[0],$armydeploymentManagerActiveArcherQueenCrossBow[1],$armydeploymentManagerActiveArcherQueenCrossBow[2],$armydeploymentManagerActiveArcherQueenCrossBow[3],$armydeploymentManagerActiveHeroPixels[1][1])
+	if @error Then
+		return
+	Else
+
+		local $localHealthYPosition=($localOfQueenCrossBow[1]-$armydeploymentManagerActiveHeroWeapontoHealthYDifference[1])
+
+		;Determine if you can see through the healthbar at 70%, if so heal him, otherwise do nothing
+		PixelSearch($localOfQueenCrossBow[0],$localHealthYPosition,$localOfQueenCrossBow[0],$localHealthYPosition,$armydeploymentManagerActiveHeroHealthColor[1])
+		if @error Then
+		Else ;Health the king
+			ConsoleWrite("The queen needs healing!!" & @LF)
+			;generate a random Y position between the guantlet and healthbar
+			local $randomYforClick=(Random($localHealthYPosition,$localOfQueenCrossBow[1],1))
+			local $randomXPosition=(Random($localOfQueenCrossBow[0]-10,$localOfQueenCrossBow[0]+10))
+			MouseClick("left",$randomXPosition,$randomYforClick,1)
+		EndIf
+	EndIf
+
 EndFunc

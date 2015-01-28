@@ -37,8 +37,7 @@
 ;=======================================================================================================================================
 ;Master Script Below
 ;=======================================================================================================================================
-
-armyQueingManager_queSpells()
+armydeploymentManager_useHeroablitiesIfNeeded()
 Exit
 
 programController_loadBlueStacksIfNeeded()
