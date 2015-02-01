@@ -141,6 +141,7 @@ Func armydeploymentManager_AttackActiveWithBARCH()
 	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave6,$randomDropPosition)
 	armydeploymentManager_useHeroablitiesIfNeeded()
+	;amydeploymentManager_usePotionsIfSelected()
 	armydeploymentManager_dropWave($BARCHattackActiveWave7,$randomDropPosition)
 	armydeploymentManager_useHeroablitiesIfNeeded()
 	armydeploymentManager_dropWave($BARCHattackActiveWave8,$randomDropPosition)
@@ -295,9 +296,9 @@ EndFunc
 
 Func armydeploymentManager_ClickOnReturnHomeButton()
 	ConsoleWrite("Enting armydeploymentManager_ClickOnReturnHomeButton() Function" & @LF)
-	Sleep(Random(500,31000))
+	Sleep(Random(500,17000))
 	pixelSearchClickOnThis($pixelSearchReturnHomeButtonColor,$pixelSearchReturnHomeButtonPosition)
-	Sleep(Random(11000,23000))
+	Sleep(Random(2000,14000))
 	programController_restartIfNotAtBase()
 
 EndFunc
@@ -375,5 +376,39 @@ Func healthArcherQueenifNeeded()
 			MouseClick("left",$randomXPosition,$randomYforClick,1)
 		EndIf
 	EndIf
+
+EndFunc
+
+
+Func amydeploymentManager_usePotionsIfSelected()
+	if $baseEvaluater_usePotions== "Y" AND $masterSettings_usePosition=="Y" Then
+		ConsoleWrite("Using potion! " & @LF)
+		dropPotionOnhighestConcentrationofTroops()
+	EndIf
+EndFunc
+
+;used when dropping trophies
+;used when dropping trophies
+Func armydeploymentManager_dropASingleTroop()
+
+	if armydeploymentManager_areAnyTroopsOfThisTypeLeft(0)=="Y" Then
+		armydeploymentManager_armydeploymentManagerSelectTroop(0)
+	Else
+		if armydeploymentManager_areAnyTroopsOfThisTypeLeft(1)=="Y" Then
+			armydeploymentManager_armydeploymentManagerSelectTroop(1)
+		Else
+			if armydeploymentManager_areAnyTroopsOfThisTypeLeft(10)=="Y" Then
+				armydeploymentManager_armydeploymentManagerSelectTroop(10)
+			Else
+				if armydeploymentManager_areAnyTroopsOfThisTypeLeft(11)=="Y" Then
+					armydeploymentManager_armydeploymentManagerSelectTroop(11)
+				EndIf
+			EndIf
+		EndIf
+	EndIf
+
+	MouseClick("left",Random(120,130,1), Random(570,580,1))
+	armydeploymentManager_ClickOnEndBattleButton()
+	armydeploymentManager_ClickOnReturnHomeButton()
 
 EndFunc

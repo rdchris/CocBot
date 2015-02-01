@@ -1,34 +1,40 @@
 ; Master Settings!
-Global $masterSettings_scriptOn="Y"
+Global $masterSettings_scriptOn
 
 ;Attack Settings
-Global $masterSettings_attackType="BARCH"      ;options GAB, BARCH
-Global $masterSettings_boostBarracks="N"
+Global $masterSettings_attackType
+Global $masterSettings_boostBarracks
 
-Global $masterSettings_usePosition="Y"
-Global $masterSetings_PotionType="Rage"		   ;options Rage
+Global $masterSettings_usePosition
+Global $masterSetings_PotionType
 
-Global $masterSettings_attackActiveYorN="Y"
+Global $masterSettings_attackActiveYorN
 
-Global $masterSettings_attacksToExecute=99999
+Global $masterSettings_attacksToExecute
 
 ;Hero Settings
-Global $masterSettings_dropHeros="Y"
+Global $masterSettings_dropHeros
 
 ;Loot Values!
-Global $masterSettings_goldValue=1
-Global $masterSettings_elixirValue=1
-Global $masterSettings_deValue=10
+Global $masterSettings_goldValue
+Global $masterSettings_elixirValue
+Global $masterSettings_deValue
 
 ;Value to attack !!Important!!
-Global $masterSettings_attackOnValueInactive=250000
-Global $masterSettings_attackOnValueInactiveUsePotions=500000
+Global $masterSettings_attackOnValueInactive
+Global $masterSettings_attackOnValueInactiveUsePotions
 
-Global $masterSettings_attackOnValueActive=350000
-Global $masterSettings_attackOnValueInactiveUsePotions=400000
+Global $masterSettings_attackOnValueActive
+Global $masterSettings_attackOnValueInactiveUsePotions
 
 ;Value to attack if boosting
-Global $masterSettings_attackOnValueInactiveBOOSTING=150000
-Global $masterSettings_attackOnValueActiveBOOSTING=200000
+Global $masterSettings_attackOnValueInactiveBOOSTING
+Global $masterSettings_attackOnValueActiveBOOSTING
 
+;The starting and ending range of trophies
+Global $masterSettings_trophyRangeStartingRange
+Global $masterSettings_trophyRangeEndingRange
 
+;Screenshots
+Global $masterSettings_takeScreenshotOfAttackedBases
+Global $masterSettings_takeScreenshotOfDisconnections

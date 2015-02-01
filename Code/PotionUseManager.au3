@@ -32,8 +32,8 @@ EndFunc
 ;The purpose of this loop is to make an array of
 Func getArrayOfTroopColor($troopColor1,$troopColor2)
 	While $loop=="on"
-		$miniumDistanceToConsiderAnotherTroops=5
-		$pixelDistanceToConsiderInTheSameGroup=150
+		$miniumDistanceToConsiderAnotherTroops=7
+		$pixelDistanceToConsiderInTheSameGroup=100
 		$shadeVariance=7
 
 		local $location=PixelSearch($starginPosition[0],$starginPosition[1],$starginPosition[2],$starginPosition[3],$troopColor1,$shadeVariance)
@@ -43,7 +43,7 @@ Func getArrayOfTroopColor($troopColor1,$troopColor2)
 			PixelSearch($location[0]-25,$location[1]-25,$location[0]+25,$location[1]+25,$troopColor2,$shadeVariance)
 			if @error Then
 			Else
-				ConsoleWrite("Pixel Found at: " & $location[0] & " " & $location[1] & @LF)
+				;ConsoleWrite("Pixel Found at: " & $location[0] & " " & $location[1] & @LF)
 				local $tempArray[1][3]=[[$location[0],$location[1],($location[0]+$location[1])]]
 				_ArrayAdd($pixelMatchesArray,$tempArray)
 
@@ -108,7 +108,6 @@ EndFunc
 ;Function determine potion spot
 Func determinePotionSpot()
 	 local $positionPositionXRelativeToTroops
-	 local $positionPositionYRelativeToTroops
 	 ;If greated than one you are on the right side
 	 If ($troopGroupPositionX-(@DesktopWidth/2)) > 1 Then
 		$potionDropPositionX=$troopGroupPositionX-50
@@ -126,7 +125,7 @@ Func determinePotionSpot()
 		$positionPositionYRelativeToTroops="Up"
 	 EndIf
 
-	 ;MouseMove($potionDropPositionX,$potionDropPositionY)
+	 MouseMove($potionDropPositionX,$potionDropPositionY)
 EndFunc
 
 Func dropPotion($potionType)

@@ -33,6 +33,7 @@ Func armyQueingManager_buildArmy()
 		Case Else
 			armyQueingManager_buildGABArmy()
 	EndSwitch
+
 EndFunc
 
 ; Army Order!
@@ -44,7 +45,7 @@ Func armyQueingManager_buildGABArmy()
 EndFunc
 
 Func armyQueingManager_buildBarchArmy()
-	Global  $allBarracksArmy[4][10] =[["ALL",0,0,0,0,0,0,0,0,0], ["ALL",0,0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0]]
+	Global  $allBarracksArmy[4][10] =[["ALL",0,0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0]]
 	armyQueingManager_loadBarracks($allBarracksArmy)
 EndFunc
 
@@ -62,7 +63,7 @@ Func armyQueingManager_loadBarracks($allBarracksArmy)
 		armyQueingManager_barracksMenuLoadTroopsSelected($allBarracksArmy,$currentArmyBaseNumber)
 		armyQueingManager_closeArmyMenu()
 
-		if $baseEvaluater_usePotions=="Y" Then
+		if $baseEvaluater_usePotions=="Y" AND $baseEvaluater_usePotions<>"N" Then
 			armyQueingManager_queSpells()
 		EndIf
 	Next
@@ -186,7 +187,7 @@ Func armyQueingManager_queSpells()
 	Sleep(Random(500,4230))
 
 	if ($masterSetings_PotionType=="Rage") Then
-		MouseClick("left",$armyQueingManager_potionMenuPoitions[2][1]+Random(-50,+50),$armyQueingManager_potionMenuPoitions[2][2]+Random(-50,+50),Random(2,4))
+		MouseClick("left",$armyQueingManager_potionMenuPoitions[2][1]+Random(-25,+25),$armyQueingManager_potionMenuPoitions[2][2]+Random(-25,+25),Random(2,4))
 	EndIf
 
 	armyQueingManager_closeArmyMenu()

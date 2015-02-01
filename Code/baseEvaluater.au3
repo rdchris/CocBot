@@ -129,7 +129,9 @@ Func determineToAttack()
 	EndIf
 
 	If $baseEvaluater_attackYorN=="Y" Then
-		;programController_takeScreenshot("attackedBases")
+		if $masterSettings_takeScreenshotOfAttackedBases=="Y" Then
+			programController_takeScreenshot("attackedBases")
+		EndIf
 	Else
 		;programController_takeScreenshot("skippedBases")
 	EndIf

@@ -80,7 +80,9 @@ Func programController_killScript($nameOfProcess)
 	ConsoleWrite(" BOOM!!!! BOT IS DOWN! " & @LF)
 	ConsoleWrite("Bot resetProgramIfPixel NotFound trigger when looking for " & $nameOfProcess & @LF)
 	ConsoleWrite("-----------------------------------" & @LF)
-	programController_takeScreenshot("disconnections")
+	if $masterSettings_takeScreenshotOfDisconnections=="Y" Then
+		programController_takeScreenshot("disconnections")
+	EndIf
 	programController_takeABreak(311000,530000)
 EndFunc
 
@@ -165,3 +167,4 @@ Func programController_loadBlueStacksIfNeeded()
 	WinActivate("BlueStacks App Player")
 
 EndFunc
+

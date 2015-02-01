@@ -14,6 +14,7 @@
 #include <masterSettings.au3>
 #include <masterConfig.au3>
 
+
 ;static positions
 #include <buildingMenuPositions.au3>
 #include <pixelPositions.au3>
@@ -30,15 +31,16 @@
 #include <armyQueingManager.au3>
 #include <attackManager.au3>
 #include <armydeploymentManager.au3>
+#include <trophyManager.au3>
 #include <potionUseManager.au3>
 
 ;External Programs and Lauching
 #include <programController.au3>
+#include <externalOptionsManager.au3>
+
 ;=======================================================================================================================================
 ;Master Script Below
 ;=======================================================================================================================================
-armydeploymentManager_useHeroablitiesIfNeeded()
-Exit
 
 programController_loadBlueStacksIfNeeded()
 initScriptVars()
@@ -49,6 +51,7 @@ startKeepAliveLoop()
 Func initScriptVars()
 	Global $numberOfAttacksToDoThisSession=$masterSettings_attacksToExecute
 	Global $numberOfAttacksThisSession=0
+	externalOptionsManager_configureMasterSettings()
 	ConsoleWrite("For This Session there will be " & $numberOfAttacksToDoThisSession & " attacks" & @LF)
 EndFunc
 
@@ -80,6 +83,7 @@ Func startAttackLoop()
 		baseManager_randomlyCollectResources()
 		baseManager_takeScreenshotOfLoot()
 		armyQueingManager_buildArmy()						;Ques up the army selected in the master settings screen.
+		reviewTrophiesDropIfNeeded()
 		armyQueingManager_waitForArmyCampsToBeFull()				;waits until army is ready to attack
 		baseManager_InitiateAttack() 						;Navigates through menus and pulls up first base
 		attackManager_FindTargetBase()						;Scans through target bases until one that meets criteria is found5

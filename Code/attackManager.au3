@@ -30,13 +30,18 @@ Func attackManager_FindTargetBase()
 		programController_restartIfAtBase()
 		pixelSearchWaitForPixelToAppear($attackManager_PositionsFindNext,$attackManager_FindNextColor,60)
 		baseEvaluationForAttack()
-		if $baseEvaluater_attackYorN="N" Then
+		if $baseEvaluater_attackYorN=="N" Then
 			randomClickFunctions_RandomClick($attackManager_PositionsFindNext)
 		EndIf
 
-	Until $baseEvaluater_attackYorN="Y"
+	Until $baseEvaluater_attackYorN=="Y"
+EndFunc
 
-
+;Just enter and go for an attack agains the first base, used for dropping trophies
+Func attackManager_GoToFirstBase()
+		programController_loginIfDisconnected()
+		programController_restartIfAtBase()
+		pixelSearchWaitForPixelToAppear($attackManager_PositionsFindNext,$attackManager_FindNextColor,60)
 EndFunc
 
 Func attackManager_executeAttack()
