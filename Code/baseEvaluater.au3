@@ -237,5 +237,6 @@ EndFunc
 
 Func baseManager_takeScreenshotOfLoot()
 	_ScreenCapture_Capture("C:\Users\Chris\Dropbox\AutoIt\autoScreenshots\loot\currentloot.jpg",1350,0,1650,240,True)
+	_ScreenCapture_Capture("C:\wamp\www\Images\currentloot.jpg",1350,0,1650,240,True)
 		;_ScreenCapture_Capture("C:\Users\Chris\Dropbox\AutoIt\autoScreenshots\" & $dir & "\" & $dateTime & ".jpg")
 EndFunc

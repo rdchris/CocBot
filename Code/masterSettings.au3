@@ -5,7 +5,7 @@ Global $masterSettings_scriptOn
 Global $masterSettings_attackType
 Global $masterSettings_boostBarracks
 
-Global $masterSettings_usePosition
+Global $masterSettings_usePotion
 Global $masterSetings_PotionType
 
 Global $masterSettings_attackActiveYorN

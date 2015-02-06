@@ -4,7 +4,7 @@ Func externalOptionsManager_configureMasterSettings()
     $masterSettings_scriptOn = IniRead("settings.ini", "Activation", "masterSettings_scriptOn", "")
 
 $masterSettings_boostBarracks = IniRead("settings.ini", "Attack Settings", "masterSettings_boostBarracks", "")
-$masterSettings_usePosition = IniRead("settings.ini", "Attack Settings", "masterSettings_usePosition", "")
+$masterSettings_usePotion = IniRead("settings.ini", "Attack Settings", "masterSettings_usePotion", "")
 $masterSetings_PotionType = IniRead("settings.ini", "Attack Settings", "masterSetings_PotionType", "")
 $masterSettings_attackActiveYorN = IniRead("settings.ini", "Attack Settings", "masterSettings_attackActiveYorN", "")
 $masterSettings_attacksToExecute = IniRead("settings.ini", "Attack Settings", "masterSettings_attacksToExecute", "")

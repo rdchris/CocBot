@@ -82,7 +82,7 @@ Global $BARCHattackActiveWave4[2][5]=[["Barbs",0,13,13,150],["Archers",1,16,21,7
 Global $BARCHattackActiveWave5[3][5]=[["Barbs",0,11,17,150],["Archers",1,11,14,650],["Barb King",10,5,5,50]]
 Global $BARCHattackActiveWave6[2][5]=[["Barbs",0,16,23,150],["Archers",1,11,13,500]]
 Global $BARCHattackActiveWave7[2][5]=[["Barbs",0,17,23,150],["Archers",1,12,14,700]]
-Global $BARCHattackActiveWave8[2][5]=[["Barbs",0,24,37,150],["Archers",1,23,36,200]]
+Global $BARCHattackActiveWave8[2][5]=[["Barbs",0,50,75,150],["Archers",1,50,75,200]]
 
 Global $BARCHOptions[1][2]=[["Timer To Quit",125000]] ;stat
 Global $BARCHHeroOptions[2][2]=[["Use Archer Queen","Y"],["Use Barb King","Y"]]
@@ -296,9 +296,9 @@ EndFunc
 
 Func armydeploymentManager_ClickOnReturnHomeButton()
 	ConsoleWrite("Enting armydeploymentManager_ClickOnReturnHomeButton() Function" & @LF)
-	Sleep(Random(500,17000))
+	Sleep(Random(1500,17000))
 	pixelSearchClickOnThis($pixelSearchReturnHomeButtonColor,$pixelSearchReturnHomeButtonPosition)
-	Sleep(Random(2000,14000))
+	Sleep(Random(5000,14000))
 	programController_restartIfNotAtBase()
 
 EndFunc
@@ -381,7 +381,7 @@ EndFunc
 
 
 Func amydeploymentManager_usePotionsIfSelected()
-	if $baseEvaluater_usePotions== "Y" AND $masterSettings_usePosition=="Y" Then
+	if $baseEvaluater_usePotions== "Y" AND $masterSettings_usePotion=="Y" Then
 		ConsoleWrite("Using potion! " & @LF)
 		dropPotionOnhighestConcentrationofTroops()
 	EndIf

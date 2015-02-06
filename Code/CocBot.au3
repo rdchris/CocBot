@@ -83,7 +83,7 @@ Func startAttackLoop()
 		baseManager_randomlyCollectResources()
 		baseManager_takeScreenshotOfLoot()
 		armyQueingManager_buildArmy()						;Ques up the army selected in the master settings screen.
-		reviewTrophiesDropIfNeeded()
+		;reviewTrophiesDropIfNeeded()
 		armyQueingManager_waitForArmyCampsToBeFull()				;waits until army is ready to attack
 		baseManager_InitiateAttack() 						;Navigates through menus and pulls up first base
 		attackManager_FindTargetBase()						;Scans through target bases until one that meets criteria is found5

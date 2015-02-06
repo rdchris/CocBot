@@ -45,7 +45,7 @@ Func armyQueingManager_buildGABArmy()
 EndFunc
 
 Func armyQueingManager_buildBarchArmy()
-	Global  $allBarracksArmy[4][10] =[["ALL",0,0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0]]
+	Global  $allBarracksArmy[4][10] =[["ALL",0,0,0,0,0,0,0,0,0], ["ALL",0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0], [0,"ALL",0,0,0,0,0,0,0,0]]
 	armyQueingManager_loadBarracks($allBarracksArmy)
 EndFunc
 
