@@ -35,7 +35,7 @@ Func baseEvaluationForAttack()
 	determineToAttack()
 
 	;Do a second check before commiting to an attack
-	if $baseEvaluater_attackYorN=="Y" Then
+	if $baseEvaluater_attackYorN=="Y" OR ($goldAmount==0 AND $elixirAmount==0) Then
 		getResources()
 		reviewResourceFinding()
 		determineToAttack()
@@ -72,19 +72,19 @@ Func reviewResourceFinding()
 	if $elixirAmount > 700000 Then
 		$elixirAmount=70000
 	EndIf
-
+	#cs
 	if 	$goldAmount > $elixirAmount * 3 Then
 		$goldAmount=0
 	EndIf
 
-		if 	$elixirAmount > $goldAmount * 3 Then
+	if 	$elixirAmount > $goldAmount * 3 Then
 		$elixirAmount=0
 	EndIf
 
 	if $deAmount > 4000 Then
 		$deAmount=400
 	EndIf
-
+	#ce
 
 
 EndFunc
