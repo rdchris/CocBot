@@ -63,7 +63,7 @@ Func armyQueingManager_loadBarracks($allBarracksArmy)
 		armyQueingManager_barracksMenuLoadTroopsSelected($allBarracksArmy,$currentArmyBaseNumber)
 		armyQueingManager_closeArmyMenu()
 
-		if $baseEvaluater_usePotions=="Y" AND $baseEvaluater_usePotions<>"N" Then
+		if $baseEvaluater_usePotions=="Y" AND $baseEvaluater_usePotions<>"N" AND $masterSettings_usePotion =="Y" Then
 			armyQueingManager_queSpells()
 		EndIf
 	Next

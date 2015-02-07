@@ -38,3 +38,4 @@ Global $masterSettings_trophyRangeEndingRange
 ;Screenshots
 Global $masterSettings_takeScreenshotOfAttackedBases
 Global $masterSettings_takeScreenshotOfDisconnections
+Global $masterSettings_lootScreenshotPath
