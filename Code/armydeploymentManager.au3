@@ -5,7 +5,7 @@
 
 ; Army - Finding in deployment
 ;======
-Global $pixelSearchArmyTroops[13][2]=[["0-Barbs",0xF8F830],["1-Archers",0xE84071],["2-Gaints",0xF8CC96],["3-goblinTODO","???"],["4-WBTODO","????"],["5-Balloons","????"],["6-WizardsTODO","??"],["7-HealerTODO","??"],["8-DragonTODO","????"],["9-PEAKKATODO","????"], _
+Global $pixelSearchArmyTroops[13][2]=[["0-Barbs",0xF8F830],["1-Archers",0xE64071],["2-Gaints",0xF8CC96],["3-goblinTODO","???"],["4-WBTODO","????"],["5-Balloons","????"],["6-WizardsTODO","??"],["7-HealerTODO","??"],["8-DragonTODO","????"],["9-PEAKKATODO","????"], _
 									  ["10-Barb King",0xF8E05E], ["11-Archer Queen",0x7F37FA], _
 									  ["12-Minion",0x326BA3]]
 Global $armydeploymentManagerActiveHeroPixels[2][2]=[["barb king gauntlet",0xCDA95C],["archer queen crossboxColor",0xF8A7FE]]

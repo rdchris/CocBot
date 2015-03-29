@@ -3,7 +3,7 @@
 
 															;barbs		archers		giants		goblins		WallBreakers 	Ballons	 	Wizards	 	Healers	 	Dragons		PEAKKAs
 Global $armyQueingManager_barracksMenuPosition[10][2] 	= 	[[515, 470], [690, 480], [850, 480], [1015, 480], [1180, 480], [520, 640], [675, 640], [830, 640], [1010, 630], [1170, 640]]
-Global $armyQueingManager_barracksMenuClosePosition[2] 	= 	[1300, 200]
+Global $armyQueingManager_barracksMenuClosePosition[2] 	= 	[1291,202]
 Global $armyQueingManager_barracksMenuCloseColor	=		0xF8FCFF
 
 Global $armyQueingManager_potionMenuPoitions[5][3]=[["Lightening",520,475],["Healing",687,475],["Rage",843,475],["Jump",1015,475],["Frost",1170,475]]
@@ -122,7 +122,7 @@ Func armyQueingManager_barracksMenuLoadTroopsSelected($allBarracksArmy,$currentA
 	Sleep(Random(50,150))
 	For $currentSelectedTroop = 0 To 9 Step 1
 		if $allBarracksArmy[$currentArmyBaseNumber][$currentSelectedTroop]=="ALL" Then
-			MouseMove($armyQueingManager_barracksMenuPosition[$currentSelectedTroop][0] + Random(0,45,1), $armyQueingManager_barracksMenuPosition[$currentSelectedTroop][1] + Random(0,45,1))
+			MouseMove($armyQueingManager_barracksMenuPosition[$currentSelectedTroop][0] + Random(0,3,1), $armyQueingManager_barracksMenuPosition[$currentSelectedTroop][1] + Random(0,3,1))
 			MouseDown("left")
 			Sleep(Random(2950,6322))
 			MouseUp("left")

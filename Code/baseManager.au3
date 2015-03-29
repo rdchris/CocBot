@@ -6,10 +6,10 @@ Global $barrackPositions[4][2] =  [[382, 654], [437, 687], [491, 727], [549, 768
 Global $darkBarrackPositions[2][2] = [[600,590], [650,720]] ; DB 1,2
 Global $baseManager_spellFactorPosition[2]=[436,604]
 
-Global $pixelSearchFullArmyCampBarracksPosition[4]=[432,624,432,624]
-Global $pixelSearchFullArmyCampBarracksColor=0xEEEEEE
-Global $pixelSearchFullArmyCampCampPosition[4]=[1326,610,1326,610]
-Global $pixelSearchFullArmyCampCampColor=0xF8F8F8
+Global $pixelSearchFullArmyCampBarracksPosition[4]=[1015,552,1015,552]
+Global $pixelSearchFullArmyCampBarracksColor=0xF8FCFF
+Global $pixelSearchFullArmyCampCampPosition[4]=[1328,609,1328,609]
+Global $pixelSearchFullArmyCampCampColor=0xECECEC
 
 ;Menu Positions
 Global $baseMenuPositionAttackButton[4]=[30,835,160,950]
